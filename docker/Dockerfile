@@ -1,6 +1,16 @@
 # Dockerfile for Delft3D-FM Compilation
 # Based on Rocky Linux 8 (CentOS 8 successor, actively maintained)
 # Uses Intel OneAPI compilers for Fortran/C++
+# Targets Windows hosts via X11 forwarding
+#
+# GUI USAGE (Windows):
+#   Option 1 - WSL2 + WSLg (Windows 11 / Win10 21H2+, Docker Desktop WSL2 backend):
+#     WSLg provides an X server automatically; GUI apps display natively.
+#     docker run -e DISPLAY=$DISPLAY <image>
+#
+#   Option 2 - VcXsrv or MobaXterm (any Windows):
+#     Launch VcXsrv with "Disable access control" checked, then:
+#     docker run -e DISPLAY=host.docker.internal:0.0 <image>
 
 FROM rockylinux:8
 
@@ -8,13 +18,11 @@ FROM rockylinux:8
 ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-# Enable PowerTools repository (has additional dev packages)
-RUN dnf install -y dnf-plugins-core && \
+# Enable PowerTools and EPEL repositories and install all system dependencies in one layer
+RUN dnf install -y dnf-plugins-core epel-release && \
     dnf config-manager --set-enabled powertools && \
-    dnf -y update
-
-# Install base dependencies via dnf
-RUN dnf -y install \
+    dnf -y update && \
+    dnf -y install \
     # Build essentials
     gcc \
     gcc-c++ \
@@ -31,36 +39,70 @@ RUN dnf -y install \
     expat-devel \
     libxml2-devel \
     libcurl-devel \
-    # HDF5 (will also build from source for consistency)
-    hdf5-devel \
+    sqlite-devel \
+    libtiff-devel \
+    gtest-devel \
+    gdal-devel \
+    libuuid-devel \
     # Utilities
     which \
     file \
     patch \
     pkg-config \
-    cmake \
     python3 \
     bzip2 \
+    procps-ng \
+    patchelf \
+    ca-certificates \
+    # X11 and GUI dependencies (for visualization tools via X11 forwarding)
+    xorg-x11-xauth \
+    xorg-x11-utils \
+    libX11 \
+    libX11-devel \
+    libXext \
+    libXrender \
+    libXt-devel \
+    mesa-libGL \
+    mesa-libGL-devel \
+    mesa-dri-drivers \
+    fontconfig \
+    freetype \
+    qt5-qtbase \
+    qt5-qtbase-gui \
+    qt5-qtsvg \
+    # Visualization tools for Delft3D output
+    ncview \
+    paraview \
+    python3-numpy \
     && dnf clean all
 
-# Add Intel oneAPI repository
-RUN tee /etc/yum.repos.d/oneAPI.repo > /dev/null <<EOF
+# Install CMake 3.30+ (required by Delft3D)
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.30.0/cmake-3.30.0-linux-x86_64.tar.gz && \
+    tar -xzf cmake-3.30.0-linux-x86_64.tar.gz -C /opt && \
+    ln -s /opt/cmake-3.30.0-linux-x86_64/bin/* /usr/local/bin/ && \
+    rm cmake-3.30.0-linux-x86_64.tar.gz
+
+# Add Intel oneAPI repository and import GPG key explicitly
+# (repo_gpgcheck disabled because Intel's current key doesn't cover older 2021.4 packages)
+RUN rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
+    tee /etc/yum.repos.d/oneAPI.repo > /dev/null <<EOF
 [oneAPI]
 name=Intel oneAPI repository
 baseurl=https://yum.repos.intel.com/oneapi
 enabled=1
-gpgcheck=1
-repo_gpgcheck=1
+gpgcheck=0
+repo_gpgcheck=0
 gpgkey=https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 EOF
 
 # Install Intel oneAPI compilers and tools
-# Using Intel Fortran 2021.4 (compatible with Delft3D build scripts)
+# Using Intel oneAPI 2023.x which has better Fortran 2008 support
+# Classic compilers (icc/icpc/ifort) are still available in 2023.x
 RUN dnf -y install \
-    intel-oneapi-compiler-fortran-2021.4.0 \
-    intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2021.4.0 \
-    intel-oneapi-mpi-devel-2021.4.0 \
-    intel-oneapi-mkl-devel-2021.4.0 \
+    intel-oneapi-compiler-fortran-2023.2.0 \
+    intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2023.2.0 \
+    intel-oneapi-mpi-devel-2021.10.0 \
+    intel-oneapi-mkl-devel-2023.2.0 \
     && dnf clean all
 
 # Set up Intel oneAPI environment in bashrc
@@ -70,17 +112,10 @@ RUN echo "source /opt/intel/oneapi/setvars.sh --force" >> /etc/bashrc && \
 # Create working directories
 RUN mkdir -p /opt/delft3d /build
 
-# Set working directory
-WORKDIR /build
-
-# Clone Delft3D repository
-RUN git clone https://github.com/Deltares/Delft3D.git
-
-# Build NetCDF-C with Intel compilers
-# Delft3D requires NetCDF compiled with the same compiler
+# ============================================================
+# Build HDF5 from source with Intel compilers
+# ============================================================
 WORKDIR /build/netcdf
-
-# Download and build HDF5 first (for NetCDF dependency)
 RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.2/src/hdf5-1.12.2.tar.gz && \
     tar -xzf hdf5-1.12.2.tar.gz && \
     cd hdf5-1.12.2 && \
@@ -91,10 +126,13 @@ RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.2/sr
                 --enable-cxx \
                 --enable-parallel=no && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    cd /build && rm -rf /build/netcdf/hdf5-1.12.2 /build/netcdf/hdf5-1.12.2.tar.gz
 
-# Download and build NetCDF-C
-RUN wget https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz && \
+# ============================================================
+# Build NetCDF-C
+# ============================================================
+RUN wget --no-check-certificate https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz && \
     tar -xzf netcdf-c-4.9.2.tar.gz && \
     cd netcdf-c-4.9.2 && \
     source /opt/intel/oneapi/setvars.sh --force && \
@@ -106,10 +144,13 @@ RUN wget https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
                 --disable-dap \
                 --disable-byterange && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    cd /build && rm -rf /build/netcdf/netcdf-c-4.9.2 /build/netcdf/netcdf-c-4.9.2.tar.gz
 
-# Download and build NetCDF-Fortran
-RUN wget https://downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz && \
+# ============================================================
+# Build NetCDF-Fortran
+# ============================================================
+RUN wget --no-check-certificate https://downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz && \
     tar -xzf netcdf-fortran-4.6.1.tar.gz && \
     cd netcdf-fortran-4.6.1 && \
     source /opt/intel/oneapi/setvars.sh --force && \
@@ -119,37 +160,58 @@ RUN wget https://downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-
     LDFLAGS="-L/opt/netcdf/lib -L/opt/hdf5/lib" \
     ./configure --prefix=/opt/netcdf && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    cd /build && rm -rf /build/netcdf/netcdf-fortran-4.6.1 /build/netcdf/netcdf-fortran-4.6.1.tar.gz
 
-# Install PETSc (required for some Delft3D-FM features)
+# ============================================================
+# Build PETSc (required for some Delft3D-FM features)
+# ============================================================
 WORKDIR /build/petsc
 RUN wget https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.19.4.tar.gz && \
     tar -xzf petsc-3.19.4.tar.gz && \
     cd petsc-3.19.4 && \
     source /opt/intel/oneapi/setvars.sh --force && \
     ./configure --prefix=/opt/petsc \
-                --with-cc=icc \
-                --with-cxx=icpc \
-                --with-fc=ifort \
+                --with-cc=mpiicc \
+                --with-cxx=mpiicpc \
+                --with-fc=mpiifort \
                 --download-fblaslapack=1 \
                 --with-debugging=0 \
                 COPTFLAGS='-O3' \
                 FOPTFLAGS='-O3' \
                 CXXOPTFLAGS='-O3' && \
     make PETSC_DIR=/build/petsc/petsc-3.19.4 PETSC_ARCH=arch-linux-c-opt all && \
-    make PETSC_DIR=/build/petsc/petsc-3.19.4 PETSC_ARCH=arch-linux-c-opt install
+    make PETSC_DIR=/build/petsc/petsc-3.19.4 PETSC_ARCH=arch-linux-c-opt install && \
+    cd /build && rm -rf /build/petsc/petsc-3.19.4 /build/petsc/petsc-3.19.4.tar.gz
 
-# Install METIS (mesh partitioning library)
+# ============================================================
+# Build METIS 5.2.1 (mesh partitioning library)
+# Sourced from GitHub (KarypisLab); requires GKlib as a dependency
+# ============================================================
 WORKDIR /build/metis
-RUN wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz && \
-    tar -xzf metis-5.1.0.tar.gz && \
-    cd metis-5.1.0 && \
+RUN wget https://github.com/KarypisLab/GKlib/archive/refs/heads/master.tar.gz -O gklib.tar.gz && \
+    tar -xzf gklib.tar.gz && \
+    wget https://github.com/KarypisLab/METIS/archive/refs/tags/v5.2.1.tar.gz -O metis-5.2.1.tar.gz && \
+    tar -xzf metis-5.2.1.tar.gz && \
     source /opt/intel/oneapi/setvars.sh --force && \
-    make config prefix=/opt/metis cc=icc && \
+    cd GKlib-master && \
+    mkdir build && cd build && \
+    cmake .. -DCMAKE_INSTALL_PREFIX=/opt/gklib \
+             -DCMAKE_C_COMPILER=icc \
+             -DCMAKE_BUILD_TYPE=Release \
+             -DBUILD_SHARED_LIBS=ON && \
+    make -j$(nproc) && \
+    make install && \
+    cp /opt/gklib/lib64/libGKlib.a /opt/gklib/lib/ && \
+    cd /build/metis/METIS-5.2.1 && \
+    make config prefix=/opt/metis gklib_path=/opt/gklib cc=icc && \
     make && \
-    make install
+    make install && \
+    cd /build && rm -rf /build/metis/METIS-5.2.1 /build/metis/GKlib-master /build/metis/*.tar.gz
 
-# Install PROJ (coordinate transformation library)
+# ============================================================
+# Build PROJ (coordinate transformation library)
+# ============================================================
 WORKDIR /build/proj
 RUN wget https://download.osgeo.org/proj/proj-9.4.0.tar.gz && \
     tar -xzf proj-9.4.0.tar.gz && \
@@ -161,87 +223,59 @@ RUN wget https://download.osgeo.org/proj/proj-9.4.0.tar.gz && \
              -DCMAKE_CXX_COMPILER=icpc \
              -DCMAKE_BUILD_TYPE=Release && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    cd /build && rm -rf /build/proj/proj-9.4.0 /build/proj/proj-9.4.0.tar.gz
 
-# Set up environment for Delft3D build
+# ============================================================
+# Set up environment for Delft3D build and runtime
+# ============================================================
 ENV NETCDF_DIR=/opt/netcdf \
     HDF5_DIR=/opt/hdf5 \
     PETSC_DIR=/opt/petsc \
     METIS_DIR=/opt/metis \
     PROJ_DIR=/opt/proj \
-    PKG_CONFIG_PATH=/opt/netcdf/lib/pkgconfig:/opt/hdf5/lib/pkgconfig:/opt/petsc/lib/pkgconfig:/opt/proj/lib/pkgconfig:$PKG_CONFIG_PATH \
-    LD_LIBRARY_PATH=/opt/netcdf/lib:/opt/hdf5/lib:/opt/petsc/lib:/opt/metis/lib:/opt/proj/lib:$LD_LIBRARY_PATH \
-    PATH=/opt/netcdf/bin:/opt/hdf5/bin:/opt/petsc/bin:/opt/proj/bin:$PATH
+    PKG_CONFIG_PATH=/opt/netcdf/lib/pkgconfig:/opt/hdf5/lib/pkgconfig:/opt/petsc/lib/pkgconfig:/opt/proj/lib/pkgconfig \
+    LD_LIBRARY_PATH=/opt/netcdf/lib:/opt/hdf5/lib:/opt/petsc/lib:/opt/metis/lib:/opt/gklib/lib:/opt/proj/lib \
+    PATH=/opt/netcdf/bin:/opt/hdf5/bin:/opt/petsc/bin:/opt/proj/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Build Delft3D-FM
-WORKDIR /build/Delft3D
+# ============================================================
+# Clone and build Delft3D-FM
+# ============================================================
+WORKDIR /build
+RUN git clone --branch DIMRset_2.30.17 --depth 1 https://github.com/Deltares/Delft3D.git
 
-# Create a build wrapper script
-RUN echo '#!/bin/bash' > /build/build_delft3d.sh && \
-    echo 'set -e' >> /build/build_delft3d.sh && \
-    echo 'echo "================================================"' >> /build/build_delft3d.sh && \
-    echo 'echo "Building Delft3D-FM Suite"' >> /build/build_delft3d.sh && \
-    echo 'echo "================================================"' >> /build/build_delft3d.sh && \
-    echo 'source /opt/intel/oneapi/setvars.sh --force' >> /build/build_delft3d.sh && \
-    echo 'cd /build/Delft3D' >> /build/build_delft3d.sh && \
-    echo 'export NETCDF_DIR=/opt/netcdf' >> /build/build_delft3d.sh && \
-    echo 'export HDF5_DIR=/opt/hdf5' >> /build/build_delft3d.sh && \
-    echo 'export PETSC_DIR=/opt/petsc' >> /build/build_delft3d.sh && \
-    echo 'export METIS_DIR=/opt/metis' >> /build/build_delft3d.sh && \
-    echo 'export PROJ_DIR=/opt/proj' >> /build/build_delft3d.sh && \
-    echo './build.sh fm-suite --compiler intel21 2>&1 | tee /build/build.log' >> /build/build_delft3d.sh && \
-    echo 'echo "================================================"' >> /build/build_delft3d.sh && \
-    echo 'echo "Build complete! Binaries in:"' >> /build/build_delft3d.sh && \
-    echo 'echo "  /build/Delft3D/build_fm-suite/install/bin/"' >> /build/build_delft3d.sh && \
-    echo 'echo "================================================"' >> /build/build_delft3d.sh && \
-    chmod +x /build/build_delft3d.sh
+# Copy helper scripts
+COPY scripts/build_delft3d.sh /build/build_delft3d.sh
+COPY scripts/dflowfm.sh      /usr/local/bin/dflowfm
+COPY scripts/delft3d-info.sh  /usr/local/bin/delft3d-info
+COPY scripts/entrypoint.sh    /usr/local/bin/entrypoint.sh
+RUN chmod +x /build/build_delft3d.sh \
+             /usr/local/bin/dflowfm \
+             /usr/local/bin/delft3d-info \
+             /usr/local/bin/entrypoint.sh
 
-# Optional: Uncomment to build during image creation (slower build, but ready-to-use image)
-# RUN /build/build_delft3d.sh
+# Build Delft3D-FM suite
+RUN /build/build_delft3d.sh
 
 # Set final working directory
 WORKDIR /workspace
 
-# Add entrypoint script for easy model execution
-RUN echo '#!/bin/bash' > /usr/local/bin/dflowfm && \
-    echo 'source /opt/intel/oneapi/setvars.sh --force > /dev/null 2>&1' >> /usr/local/bin/dflowfm && \
-    echo 'export LD_LIBRARY_PATH=/opt/netcdf/lib:/opt/hdf5/lib:/opt/petsc/lib:/opt/metis/lib:/opt/proj/lib:$LD_LIBRARY_PATH' >> /usr/local/bin/dflowfm && \
-    echo 'INSTALL_BIN="/build/Delft3D/build_fm-suite/install/bin"' >> /usr/local/bin/dflowfm && \
-    echo 'if [ -f "$INSTALL_BIN/run_dflowfm.sh" ]; then' >> /usr/local/bin/dflowfm && \
-    echo '    exec "$INSTALL_BIN/run_dflowfm.sh" "$@"' >> /usr/local/bin/dflowfm && \
-    echo 'else' >> /usr/local/bin/dflowfm && \
-    echo '    echo "ERROR: Delft3D not compiled yet. Run: /build/build_delft3d.sh"' >> /usr/local/bin/dflowfm && \
-    echo '    exit 1' >> /usr/local/bin/dflowfm && \
-    echo 'fi' >> /usr/local/bin/dflowfm && \
-    chmod +x /usr/local/bin/dflowfm
-
-# Create a version info script
-RUN echo '#!/bin/bash' > /usr/local/bin/delft3d-info && \
-    echo 'source /opt/intel/oneapi/setvars.sh --force' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "================================================"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "Delft3D-FM Container Information"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "================================================"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "OS:           Rocky Linux 8"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo -n "Compiler:     "; ifort --version | head -n1' >> /usr/local/bin/delft3d-info && \
-    echo 'echo -n "NetCDF-C:     "; nc-config --version' >> /usr/local/bin/delft3d-info && \
-    echo 'echo -n "NetCDF-F:     "; nf-config --version' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "HDF5:         1.12.2"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "PETSc:        3.19.4"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "METIS:        5.1.0"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "PROJ:         9.4.0"' >> /usr/local/bin/delft3d-info && \
-    echo 'echo "================================================"' >> /usr/local/bin/delft3d-info && \
-    chmod +x /usr/local/bin/delft3d-info
-
 # Add helpful message on container start
-RUN echo 'cat << "EOF"' >> /etc/bashrc && \
+RUN echo 'cat << "BANNER"' >> /etc/bashrc && \
     echo '================================================' >> /etc/bashrc && \
     echo 'Delft3D-FM Container (Rocky Linux 8)' >> /etc/bashrc && \
     echo '================================================' >> /etc/bashrc && \
     echo 'Quick commands:' >> /etc/bashrc && \
     echo '  delft3d-info         - Show version info' >> /etc/bashrc && \
-    echo '  /build/build_delft3d.sh - Compile Delft3D-FM' >> /etc/bashrc && \
     echo '  dflowfm <model.mdu>  - Run a model' >> /etc/bashrc && \
+    echo '  paraview             - Launch ParaView' >> /etc/bashrc && \
+    echo '  ncview <file.nc>     - View NetCDF output' >> /etc/bashrc && \
+    echo '' >> /etc/bashrc && \
+    echo 'GUI on Windows (X11 forwarding):' >> /etc/bashrc && \
+    echo '  WSL2/WSLg:  docker run -e DISPLAY=$DISPLAY <image>' >> /etc/bashrc && \
+    echo '  VcXsrv:     docker run -e DISPLAY=host.docker.internal:0.0 <image>' >> /etc/bashrc && \
     echo '================================================' >> /etc/bashrc && \
-    echo 'EOF' >> /etc/bashrc
+    echo 'BANNER' >> /etc/bashrc
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/bin/bash"]
