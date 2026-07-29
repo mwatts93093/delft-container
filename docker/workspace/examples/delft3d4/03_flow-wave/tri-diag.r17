@@ -1,0 +1,136 @@
+
+********************************************************************************
+***
+*** Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+***           built from : unknown source code location
+***
+***           runid      : r17
+***           date,time  : 2026-07-08, 14:58:56
+***
+********************************************************************************
+
+*** MESSAGE Executable for 64-bits platform. 
+*** MESSAGE Double precision computation using reals of kind    8 
+*** Start of User Defined Model description 
+ -
+ -  Frisian Inlet                 
+ -  sediment transport            
+ -  jan. 2005                     
+ -
+*** End   of User Defined Model description 
+
+*** MESSAGE Using UNESCO density formulation by default 
+*** MESSAGE Number of pivot points to convert wind speed to wind drag coef.: 2 
+*** MESSAGE Momentum solver cyclic method is specified 
+*** MESSAGE DRYFLP and DPSOPT both specified in MD-file. Using DPSOPT: MAX 
+*** MESSAGE Transport solver cyclic-method method is specified 
+*** MESSAGE His, map, drogue, and fourier files written in single precision (except for time and horizontal coordinates).
+Sediment fraction  1: Sediment sand       
+*** Start  of underlayer input
+Underlayer mechanism                    :                   1
+Boundary name                           :                west
+  Composition condition prescribed      :               fixed
+Boundary name                           :               noord
+  Composition condition prescribed      :               fixed
+Boundary name                           :                oost
+  Composition condition prescribed      :               fixed
+Initial bed composition                 :  from sediment file
+*** End    of underlayer input
+ 
+ 
+Determining transport formulation(s)
+*** Start  of sediment input
+Ref concentration                            :  0.1600E+04
+Option Dss                                   :           0
+Uniform mud content                          :  0.0000E+00
+Sediment number                              :           1
+  Name                                       : Sediment sand
+  Sediment Type                              :        sand
+  Transport Type                             :  algebraic formulae + advection-diffusion equation
+  Turbulent Prandtl-Schmidt number           :  0.1000E+01
+  Solid density (RHOSOL)                     :  0.2650E+04
+  sed. distribution                          :  piecewise loguniform
+  SedD10                                     :  0.1500E-03
+  SedD50                                     :  0.2000E-03
+  SedDM                                      :  0.2142E-03
+  SedD90                                     :  0.3000E-03
+  Dry bed (bulk) density (CDRYB)             :  0.1600E+04
+  Uniform IniThick                           :  0.5000E+01 [m]
+  FACDSS                                     :  0.1000E+01
+    Formula name              : Van Rijn (1993)
+    Transport formula used    : -1
+    IopSus                    :  0.0000E+00
+    AksFac                    :  0.1000E+01
+    RWave                     :  0.2000E+01
+    RDC                       :  0.1000E-01
+    RDW                       :  0.2000E-01
+    IopKCW                    :  0.1000E+01
+    EpsPar                    :  0.0000E+00
+    BetaM                     :  0.3000E+01
+  Settling velocity formula                  :  computed from grain size
+*** End    of sediment input
+ 
+*** Start  of morphological input
+Sediment transport computation starts after (min)    :  0.0000E+00
+Morphological Timescale Factor               :          0.7000E+03
+Bed level updating                           :              ACTIVE
+Bed level updates start after (min)          :          0.6000E+02
+Composition updating                         :              ACTIVE
+Composition updates start after (min)        :          0.6000E+02
+Fixed Layer Erosion Threshold                :          0.5000E-01
+Entrainment/deposition flux in mass bal.     :            INCLUDED
+Sand Equili. conc. profs. at boundaries      :                USED
+Mud  Equili. conc. profs. at boundaries      :            NOT USED
+Sediment included in fluid density calc.     :                  NO
+AKSFAC                                       :          0.1000E+01
+RWAVE                                        :          0.2000E+01
+Equilibrium sed. conc. profiles              :calculated (D3D mix)
+Suspended sed. multiplication factor         :          0.1000E+01
+Bed load transp. multiplication factor       :          0.1000E+01
+wave-rel. susp.sed.transp.fact.(SUSW)        :          0.1000E+01
+wave-rel. bed-ld.sed.transp.fact.(BEDW)      :          0.1000E+01
+Min.depth for sed. calculations(SEDTHR)      :          0.1000E+00
+Uniform dry cell erosion fact(THETSD)        :  0.0000E+00
+Max depth for variable THETSD (HMAXTH)       :          0.1500E+01
+Computing THETSD for dry bank erosion        
+Tuning param. Shields Taucr (FACTCR)         :          0.1000E+01
+Eulerian velocities i.s.o GLM velocities for suspended transports                 :                  NO
+GLM velocities i.s.o Eulerian velocities for bed load transport and reference conc:                  NO
+Correct 3D suspended load for doublecounting below the reference height aks (SUSCO:                 YES
+EPSPAR: Always use Van Rijns param. mix. dist. :                  NO
+Standard option: Rc from Flow, Rw=RWAVE*0.025 :                   1
+Update bed level at inflow boundaries        :                  NO
+Merge bottoms from parallel runs             :                  NO
+Source/sink limiter DZMAX(depth frac.)       :          0.5000E-01
+Max. volumetric ref. conc. CAMAX             :          0.6500E+00
+Hiding & exposure formulation                :                None
+Bed slope effect formulation                 :             Bagnold
+ALFABS                                       :          0.1000E+01
+ALFABN                                       :          0.1500E+01
+Numerical parameters:                        
+   Upwind scheme for bedload                 :                 YES
+   Pure1D for morphodynamics                 :                  NO
+Requested percentile(s)                      :             10.0000
+                                             :             15.0000
+                                             :             50.0000
+                                             :             90.0000
+Output transport rates                       :  volume excl. pores
+Boundary name                                :                west
+  Depth prescribed                           :               fixed
+Boundary name                                :               noord
+  Depth prescribed                           :               fixed
+Boundary name                                :                oost
+  Depth prescribed                           :               fixed
+*** End    of morphological input
+ 
+*** MESSAGE Uniform wind and pressure specified 
+*** MESSAGE Bed composition updating starts at (step) : 60 
+*** MESSAGE Bed level updating starts at (step) : 60 
+*** MESSAGE Sediment transport starts at (step) : 0 
+*** WARNING Comm. stop time outside (>) simulation period; will be reset 
+ Creating new trih-r17.dat
+ Creating new trih-r17.def
+ Creating new trim-r17.dat
+ Creating new trim-r17.def
+*** ERROR Initialization of DelftIO communication with waves failed 
+*** ERROR Flow exited abnormally 

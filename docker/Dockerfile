@@ -1,31 +1,39 @@
 # Dockerfile for Delft3D-FM Compilation
-# Based on Rocky Linux 8 (CentOS 8 successor, actively maintained)
+# Based on Ubuntu 22.04 LTS
 # Uses Intel OneAPI compilers for Fortran/C++
-# Targets Windows hosts via X11 forwarding
+# Targets Windows hosts via X11 forwarding (WSLg)
+#
+# ParaView is intentionally installed separately on Windows. The container
+# includes ncview for quick inspection through WSLg.
 #
 # GUI USAGE (Windows):
-#   Option 1 - WSL2 + WSLg (Windows 11 / Win10 21H2+, Docker Desktop WSL2 backend):
-#     WSLg provides an X server automatically; GUI apps display natively.
-#     docker run -e DISPLAY=$DISPLAY <image>
-#
-#   Option 2 - VcXsrv or MobaXterm (any Windows):
-#     Launch VcXsrv with "Disable access control" checked, then:
-#     docker run -e DISPLAY=host.docker.internal:0.0 <image>
+#   Run docker from a WSL2 terminal where $DISPLAY is set by WSLg:
+#   docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix <image>
 
-FROM rockylinux:8
+FROM ubuntu:22.04
 
-# Set environment variables
-ENV LANG=en_US.UTF-8 \
+# Use bash for all RUN commands — Ubuntu's default /bin/sh is dash which doesn't support 'source'
+SHELL ["/bin/bash", "-c"]
+
+# Prevent interactive prompts during apt installs
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-# Enable PowerTools and EPEL repositories and install all system dependencies in one layer
-RUN dnf install -y dnf-plugins-core epel-release && \
-    dnf config-manager --set-enabled powertools && \
-    dnf -y update && \
-    dnf -y install \
+# Enable universe repo and generate locale
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common locales && \
+    add-apt-repository universe && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     # Build essentials
     gcc \
-    gcc-c++ \
+    g++ \
     make \
     autoconf \
     automake \
@@ -34,80 +42,78 @@ RUN dnf install -y dnf-plugins-core epel-release && \
     subversion \
     wget \
     curl \
+    gnupg \
     # Required libraries
-    zlib-devel \
-    expat-devel \
-    libxml2-devel \
-    libcurl-devel \
-    sqlite-devel \
-    libtiff-devel \
-    gtest-devel \
-    gdal-devel \
-    libuuid-devel \
+    zlib1g-dev \
+    libexpat1-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    libsqlite3-dev \
+    sqlite3 \
+    libtiff-dev \
+    libgtest-dev \
+    libgdal-dev \
+    uuid-dev \
     # Utilities
-    which \
     file \
     patch \
     pkg-config \
     python3 \
+    python3-pip \
     bzip2 \
-    procps-ng \
+    procps \
     patchelf \
     ca-certificates \
     # X11 and GUI dependencies (for visualization tools via X11 forwarding)
-    xorg-x11-xauth \
-    xorg-x11-utils \
-    libX11 \
-    libX11-devel \
-    libXext \
-    libXrender \
-    libXt-devel \
-    mesa-libGL \
-    mesa-libGL-devel \
-    mesa-dri-drivers \
+    xauth \
+    x11-utils \
+    libx11-6 \
+    libx11-dev \
+    libxext6 \
+    libxrender1 \
+    libxt-dev \
+    libgl1 \
+    libgl1-mesa-dev \
+    libgl1-mesa-dri \
     fontconfig \
-    freetype \
-    qt5-qtbase \
-    qt5-qtbase-gui \
-    qt5-qtsvg \
+    libfreetype6 \
     # Visualization tools for Delft3D output
     ncview \
-    paraview \
+    # Python scientific stack for scripting and post-processing
     python3-numpy \
-    && dnf clean all
+    python3-scipy \
+    python3-pandas \
+    python3-netcdf4 \
+    python3-xarray \
+    # dbus-x11 needed by some GUI apps (ncview, etc.)
+    dbus-x11 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install CMake 3.30+ (required by Delft3D)
+# Install CMake 3.30+ (required by Delft3D; Ubuntu 22.04 ships 3.22 which is too old)
 RUN wget https://github.com/Kitware/CMake/releases/download/v3.30.0/cmake-3.30.0-linux-x86_64.tar.gz && \
     tar -xzf cmake-3.30.0-linux-x86_64.tar.gz -C /opt && \
     ln -s /opt/cmake-3.30.0-linux-x86_64/bin/* /usr/local/bin/ && \
     rm cmake-3.30.0-linux-x86_64.tar.gz
 
-# Add Intel oneAPI repository and import GPG key explicitly
-# (repo_gpgcheck disabled because Intel's current key doesn't cover older 2021.4 packages)
-RUN rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
-    tee /etc/yum.repos.d/oneAPI.repo > /dev/null <<EOF
-[oneAPI]
-name=Intel oneAPI repository
-baseurl=https://yum.repos.intel.com/oneapi
-enabled=1
-gpgcheck=0
-repo_gpgcheck=0
-gpgkey=https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-EOF
+# Add Intel oneAPI repository and import GPG key
+RUN wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | \
+    gpg --dearmor > /usr/share/keyrings/oneapi-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
+    > /etc/apt/sources.list.d/oneAPI.list
 
 # Install Intel oneAPI compilers and tools
-# Using Intel oneAPI 2023.x which has better Fortran 2008 support
-# Classic compilers (icc/icpc/ifort) are still available in 2023.x
-RUN dnf -y install \
+RUN apt-get update && \
+    apt-get install -y \
     intel-oneapi-compiler-fortran-2023.2.0 \
     intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2023.2.0 \
     intel-oneapi-mpi-devel-2021.10.0 \
     intel-oneapi-mkl-devel-2023.2.0 \
-    && dnf clean all
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set up Intel oneAPI environment in bashrc
-RUN echo "source /opt/intel/oneapi/setvars.sh --force" >> /etc/bashrc && \
-    echo "export ONEAPI_ROOT=/opt/intel/oneapi" >> /etc/bashrc
+# Ubuntu uses /etc/bash.bashrc (not /etc/bashrc)
+RUN echo "source /opt/intel/oneapi/setvars.sh --force" >> /etc/bash.bashrc && \
+    echo "export ONEAPI_ROOT=/opt/intel/oneapi" >> /etc/bash.bashrc
 
 # Create working directories
 RUN mkdir -p /opt/delft3d /build
@@ -186,7 +192,6 @@ RUN wget https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.19.4.tar.gz
 
 # ============================================================
 # Build METIS 5.2.1 (mesh partitioning library)
-# Sourced from GitHub (KarypisLab); requires GKlib as a dependency
 # ============================================================
 WORKDIR /build/metis
 RUN wget https://github.com/KarypisLab/GKlib/archive/refs/heads/master.tar.gz -O gklib.tar.gz && \
@@ -199,10 +204,10 @@ RUN wget https://github.com/KarypisLab/GKlib/archive/refs/heads/master.tar.gz -O
     cmake .. -DCMAKE_INSTALL_PREFIX=/opt/gklib \
              -DCMAKE_C_COMPILER=icc \
              -DCMAKE_BUILD_TYPE=Release \
-             -DBUILD_SHARED_LIBS=ON && \
+             -DCMAKE_INSTALL_LIBDIR=lib \
+             -DBUILD_SHARED_LIBS=OFF && \
     make -j$(nproc) && \
     make install && \
-    cp /opt/gklib/lib64/libGKlib.a /opt/gklib/lib/ && \
     cd /build/metis/METIS-5.2.1 && \
     make config prefix=/opt/metis gklib_path=/opt/gklib cc=icc && \
     make && \
@@ -236,7 +241,7 @@ ENV NETCDF_DIR=/opt/netcdf \
     PROJ_DIR=/opt/proj \
     PKG_CONFIG_PATH=/opt/netcdf/lib/pkgconfig:/opt/hdf5/lib/pkgconfig:/opt/petsc/lib/pkgconfig:/opt/proj/lib/pkgconfig \
     LD_LIBRARY_PATH=/opt/netcdf/lib:/opt/hdf5/lib:/opt/petsc/lib:/opt/metis/lib:/opt/gklib/lib:/opt/proj/lib \
-    PATH=/opt/netcdf/bin:/opt/hdf5/bin:/opt/petsc/bin:/opt/proj/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    PATH=/build/Delft3D/build_dimr/install/bin:/opt/netcdf/bin:/opt/hdf5/bin:/opt/petsc/bin:/opt/proj/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # ============================================================
 # Clone and build Delft3D-FM
@@ -246,13 +251,15 @@ RUN git clone --branch DIMRset_2.30.17 --depth 1 https://github.com/Deltares/Del
 
 # Copy helper scripts
 COPY scripts/build_delft3d.sh /build/build_delft3d.sh
-COPY scripts/dflowfm.sh      /usr/local/bin/dflowfm
+COPY scripts/dflowfm.sh       /usr/local/bin/dflowfm
 COPY scripts/delft3d-info.sh  /usr/local/bin/delft3d-info
 COPY scripts/entrypoint.sh    /usr/local/bin/entrypoint.sh
+COPY scripts/verify_container.sh /usr/local/bin/verify-delft3d
 RUN chmod +x /build/build_delft3d.sh \
              /usr/local/bin/dflowfm \
              /usr/local/bin/delft3d-info \
-             /usr/local/bin/entrypoint.sh
+             /usr/local/bin/entrypoint.sh \
+             /usr/local/bin/verify-delft3d
 
 # Build Delft3D-FM suite
 RUN /build/build_delft3d.sh
@@ -261,21 +268,21 @@ RUN /build/build_delft3d.sh
 WORKDIR /workspace
 
 # Add helpful message on container start
-RUN echo 'cat << "BANNER"' >> /etc/bashrc && \
-    echo '================================================' >> /etc/bashrc && \
-    echo 'Delft3D-FM Container (Rocky Linux 8)' >> /etc/bashrc && \
-    echo '================================================' >> /etc/bashrc && \
-    echo 'Quick commands:' >> /etc/bashrc && \
-    echo '  delft3d-info         - Show version info' >> /etc/bashrc && \
-    echo '  dflowfm <model.mdu>  - Run a model' >> /etc/bashrc && \
-    echo '  paraview             - Launch ParaView' >> /etc/bashrc && \
-    echo '  ncview <file.nc>     - View NetCDF output' >> /etc/bashrc && \
-    echo '' >> /etc/bashrc && \
-    echo 'GUI on Windows (X11 forwarding):' >> /etc/bashrc && \
-    echo '  WSL2/WSLg:  docker run -e DISPLAY=$DISPLAY <image>' >> /etc/bashrc && \
-    echo '  VcXsrv:     docker run -e DISPLAY=host.docker.internal:0.0 <image>' >> /etc/bashrc && \
-    echo '================================================' >> /etc/bashrc && \
-    echo 'BANNER' >> /etc/bashrc
+# Ubuntu uses /etc/bash.bashrc instead of /etc/bashrc
+RUN echo 'cat << "BANNER"' >> /etc/bash.bashrc && \
+    echo '================================================' >> /etc/bash.bashrc && \
+    echo 'Delft3D-FM Container (Ubuntu 22.04)' >> /etc/bash.bashrc && \
+    echo '================================================' >> /etc/bash.bashrc && \
+    echo 'Quick commands:' >> /etc/bash.bashrc && \
+    echo '  delft3d-info         - Show version info' >> /etc/bash.bashrc && \
+    echo '  dflowfm <model.mdu>  - Run a D-Flow FM model' >> /etc/bash.bashrc && \
+    echo '  dimr <dimr_config.xml> - Run a coupled DIMR model' >> /etc/bash.bashrc && \
+    echo '  ncview <file.nc>     - View NetCDF output' >> /etc/bash.bashrc && \
+    echo '' >> /etc/bash.bashrc && \
+    echo 'GUI on Windows (WSL2 terminal required):' >> /etc/bash.bashrc && \
+    echo '  docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix delft3d-fm-ubuntu' >> /etc/bash.bashrc && \
+    echo '================================================' >> /etc/bash.bashrc && \
+    echo 'BANNER' >> /etc/bash.bashrc
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/bin/bash"]

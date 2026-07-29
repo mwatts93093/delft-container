@@ -1,0 +1,142 @@
+/build/Delft3D/build_dflowfm/install/bin/../bin/dflowfm --nodisplay --autostartstop  f34.mdu
+  my_rank, numranks            0           1
+* 1.2.184.Unknown
+* Source: Unknown
+* File creation date: 03:24:41, 26-07-2026
+** INFO   : Command: /build/Delft3D/build_dflowfm/install/bin/../bin/dflowfm --nodisplay --autostartstop f34.mdu
+** INFO   : Reading cache file: f34.cache
+** INFO   : Successfully read cache file: f34.cache
+** INFO   : Opened file : f34_obs.xyn
+** INFO   : Closed file : f34_obs.xyn
+** INFO   : Opened file : f34_thd.pli
+** INFO   : Closed file : f34_thd.pli
+** INFO   : Opened file : f34_crs.pli
+** INFO   : Closed file : f34_crs.pli
+** INFO   : Initializing flow model geometry...
+** INFO   : nr of netnodes               ( )  :                      258
+** INFO   : nr of netlinks               ( )  :                      479
+** INFO   : 
+** INFO   : nr of 2D netlinks            ( )  :                      479
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   : 
+** INFO   : nr of netcells               ( )  :                      222
+** INFO   : nr of netcells 1D2D          ( )  :                      222
+** INFO   : 
+** INFO   : Opened file : f34_001.pli
+** INFO   : Closed file : f34_001.pli
+** INFO   : boundary: 'f34_001.pli' opened 13 cells.
+** INFO   : waterlevelbnd f34_001.pli      13 nr of open bndcells
+** INFO   : setbedlevelfromextfile: Using bedlevel as specified in net-file.
+** INFO   : Done initializing flow model geometry.
+** INFO   : cross sections with kdtree2, elapsed time:      0.0000    s.
+** INFO   : Start initializing external forcings...
+** INFO   : Done initializing external forcings.
+** INFO   : nogauss , nocg :            154            81
+** INFO   : cross sections with kdtree2, elapsed time:      0.0000    s.
+** INFO   : ** Model initialization was successful **
+** INFO   : * Active Model definition:
+** INFO   : **
+** INFO   : Modelinit finished   at: 03:24:41, 26-07-2026
+** INFO   : 
+** INFO   : 
+** INFO   : nr of netnodes               ( )  :                      258
+** INFO   : nr of netlinks               ( )  :                      479
+** INFO   : 
+** INFO   : nr of 2D netlinks            ( )  :                      479
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   : 
+** INFO   : nr of netcells               ( )  :                      222
+** INFO   : nr of netcells 1D2D          ( )  :                      222
+** INFO   : 
+** INFO   : nr of flownodes              ( )  :                      235
+** INFO   : nr of internal flownodes     ( )  :                      222
+** INFO   : nr of 2D internal flownodes  ( )  :                      222
+** INFO   : nr of 1D internal flownodes  ( )  :                        0
+** INFO   : 
+** INFO   : nr of openbnd cells       ( )     :                       13
+** INFO   : nr of 2D boundaries       ( )     :                       13
+** INFO   : nr of 1D boundaries       ( )     :                        0
+** INFO   : nr of flowlinks           ( )     :                      415
+** INFO   : nr of internal links      ( )     :                      402
+** INFO   : nr of 1D links            ( )     :                        0
+** INFO   : 
+** INFO   : nr of closed walls     ( )  :                       57
+** INFO   : 
+** INFO   : 
+** INFO   : my model area          (m2) :         0.6119620791E+09
+** INFO   : my model volume        (m3) :         0.2975438993E+10
+** INFO   : 
+** INFO   : 
+** INFO   : Start of the computation time loop
+** INFO   : Writing initial output to file(s)...
+** INFO   : Done writing initial output to file(s).
+** INFO   :    Sim. time done   Sim. time left   Real time used   Real time left Steps left Complete% Interval-averaged time step
+** INFO   :           0d  0:01:00          0d  0:09:00          0d  0:00:00          0d  0:00:00         18    14.3%     0.00000
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : extra timer:Flow geometry                                        0.0385110378
+** INFO   : extra timer:Flow init                                            0.0307869911
+** INFO   : extra timer:MDU file pointer                                     0.0874829292
+** INFO   : extra timer:Output                                               0.0215232372
+** INFO   : extra timer:unc_write_his                                        0.0149040222
+** INFO   : extra timer:unc_write_his INIT/DEF                               0.0120542049
+** INFO   : extra timer:call wrirst                                          0.0165228844
+** INFO   : extra timer:call wrimap                                          0.0418949127
+** INFO   : extra timer:call flow_externaloutput                             0.0214519501
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : nr of timesteps        ( )  :            38.0000000000
+** INFO   : average timestep       (s)  :            15.3846153846
+** INFO   : nr of setbacks         ( )  :             0.0000000000
+** INFO   : 
+** INFO   : 
+** INFO   : simulation period      (d)  :             0.0069444444
+** INFO   : total computation time (d)  :             0.0000040783
+** INFO   : time modelinit         (d)  :             0.0000036803
+** INFO   : time steps (+ plots)   (d)  :             0.0000003980
+** INFO   : 
+** INFO   : simulation period      (h)  :             0.1666666667
+** INFO   : total computation time (h)  :             0.0000978792
+** INFO   : time modelinit         (h)  :             0.0000883281
+** INFO   : time steps (+ plots)   (h)  :             0.0000095511
+** INFO   : 
+** INFO   : simulation period      (s)  :           600.0000000000
+** INFO   : total computation time (s)  :             0.3523650169
+** INFO   : time modelinit         (s)  :             0.3179810047
+** INFO   : time steps (+ plots)   (s)  :             0.0343840122
+** INFO   : 
+** INFO   : 
+** INFO   : time iniexternalforc.  (s)  :             0.0248451233
+** INFO   : 
+** INFO   : time inistep           (s)  :             0.0037248135
+** INFO   : time setumod           (s)  :             0.0007169247
+** INFO   : time furu              (s)  :             0.0001671314
+** INFO   : time solve             (s)  :             0.0021002293
+** INFO   : time gausselimination  (s)  :             0.0000000000
+** INFO   : time gausssubstitution (s)  :             0.0000000000
+** INFO   : time totalsolve        (s)  :             0.0020000000
+** INFO   : time setexternalforc.  (s)  :             0.0006351471
+** INFO   : time setext.forc.fetch (s)  :             0.0000000000
+** INFO   : time setexternalfbnd.  (s)  :             0.0001759529
+** INFO   : time steps             (s)  :             0.0122220516
+** INFO   : fraction solve/steps   ( )  :             0.1718393383
+** INFO   : total/(dnt*ndx)        (s)  :             0.0000394586
+** INFO   : av nr of cont. it s1it ( )  :             0.0000000000
+** INFO   : time transport         (s)  :             0.0000000000
+** INFO   : time debug             (s)  :             0.0000000000
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : Computation started  at: 03:24:41, 26-07-2026
+** INFO   : Computation finished at: 03:24:41, 26-07-2026
+** INFO   : 
+** INFO   : simulation period      (h)  :             0.1666666667
+** INFO   : total time in timeloop (h)  :             0.0000095511
+** INFO   : MPI    : no.
+** INFO   : OpenMP : unavailable.
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : 

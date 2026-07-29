@@ -1,0 +1,14 @@
+services:
+  delft3d:
+    image: delft3dfm:demo
+    container_name: delft3d
+    # Run this from WSL2 via: docker compose -f docker-compose.yml up -d
+    # Must be run from a WSL2 terminal where $DISPLAY is set by WSLg
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Mount your model files. WSL2 path example: /mnt/c/Users/YourName/Models:/workspace
+      - ./workspace:/workspace
+    stdin_open: true
+    tty: true

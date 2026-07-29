@@ -1,0 +1,40 @@
+#   89                                                                                  
+table-name          'T-serie BCC west                -sediment sand        for run: r17'
+contents            'uniform   ' # at ends A&B of open boundary segment                 
+location            'west                '                                              
+time-function       'non-equidistant'                                                   
+reference-time       20050101                                                           
+time-unit           'minutes'                                                           
+interpolation       'linear'                                                            
+parameter           'Time starting at ITDATE = 0.0       ' unit      '[   min  ]'       
+parameter           'sediment sand        end A uniform  ' unit      '[    -   ]'       
+parameter           'sediment sand        end B uniform  ' unit      '[    -   ]'       
+records-in-table         2                                                              
+          0.0000   0.00000       0.00000                                                
+      12960.0000   0.00000       0.00000                                                
+table-name          'T-serie BCC noord               -sediment sand        for run: r17'
+contents            'uniform   ' # at ends A&B of open boundary segment                 
+location            'noord               '                                              
+time-function       'non-equidistant'                                                   
+reference-time       20050101                                                           
+time-unit           'minutes'                                                           
+interpolation       'linear'                                                            
+parameter           'Time starting at ITDATE = 0.0       ' unit      '[   min  ]'       
+parameter           'sediment sand        end A uniform  ' unit      '[    -   ]'       
+parameter           'sediment sand        end B uniform  ' unit      '[    -   ]'       
+records-in-table         2                                                              
+          0.0000   0.00000       0.00000                                                
+      12960.0000   0.00000       0.00000                                                
+table-name          'T-serie BCC oost                -sediment sand        for run: r17'
+contents            'uniform   ' # at ends A&B of open boundary segment                 
+location            'oost                '                                              
+time-function       'non-equidistant'                                                   
+reference-time       20050101                                                           
+time-unit           'minutes'                                                           
+interpolation       'linear'                                                            
+parameter           'Time starting at ITDATE = 0.0       ' unit      '[   min  ]'       
+parameter           'sediment sand        end A uniform  ' unit      '[    -   ]'       
+parameter           'sediment sand        end B uniform  ' unit      '[    -   ]'       
+records-in-table         2                                                              
+          0.0000   0.00000       0.00000                                                
+      12960.0000   0.00000       0.00000                                                

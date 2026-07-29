@@ -1,0 +1,35 @@
+    Configfile       : config_d_hydro.xml
+    mdw-file         : r17.mdw
+    D3D_HOME         : /build/Delft3D/install_flow2d3d/bin/..
+    Working directory: /workspace/examples/delft3d4/03_flow-wave
+    mpiexec is /opt/intel/oneapi/mpi/2021.10.0//bin/mpiexec
+    FI_PROVIDER      : 
+    I_MPI_FABRICS    : 
+
+executing in the background:
+/build/Delft3D/install_flow2d3d/bin/../bin/d_hydro config_d_hydro.xml &
+
+executing in the foreground:
+/build/Delft3D/install_flow2d3d/bin/../bin/wave r17.mdw 1
+
+../../../install_all/lnx64/bin/run_dflow2d3d_dwaves.sh: line 141: /build/Delft3D/install_flow2d3d/bin/../bin/wave: No such file or directory
+--------------------------------------------------------------------------------
+       Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+       libflow2d3d.so entry Flow2D3D::Run
+--------------------------------------------------------------------------------
+
+Part I    - Initialisation Time Dep. Data module...    
+            runid : r17
+Part II   - Creating intermediate files...             
+Part III  - Initialisation of the Execution module...  
+Part IV   - Reading complete MD-file...                     
+Part V    - Initialisation & checking input...              
+Part VI   - Initialisation & checking second part...        
+Part VII  - Initialisation output...                        
+ DelftIO TIME OUT
+ DelftIO TIME OUT
+Waited:       71191.470 sec
+Initialization of DelftIO communication with waves failed
+ Flow exited abnormally
+ Check diagnosis file
+terminate called after throwing an instance of 'char const*'

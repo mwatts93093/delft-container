@@ -1,0 +1,571 @@
+
+********************************************************************************
+***
+*** Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+***           built from : unknown source code location
+***
+***           runid      : f34
+***           date,time  : 2026-07-08, 14:57:25
+***
+********************************************************************************
+
+*** MESSAGE Executable for 64-bits platform. 
+*** MESSAGE Double precision computation using reals of kind    8 
+*** Start of User Defined Model description 
+ -
+ -  Het Friesche Zeegaatje        
+ -  (Golf Stroom)                 
+ -  Test model DELFT3D            
+ -  Uitgebreid met ongelijke bodem
+ -
+*** End   of User Defined Model description 
+
+*** MESSAGE Upwind advection scheme only near momentum discharges 
+*** MESSAGE Using UNESCO density formulation by default 
+*** MESSAGE Momentum solver cyclic method is specified 
+*** MESSAGE DRYFLP and DPSOPT both specified in MD-file. Using DPSOPT: MAX 
+*** MESSAGE His, map, drogue, and fourier files written in single precision (except for time and horizontal coordinates).
+ Creating new trih-f34.dat
+ Creating new trih-f34.def
+ Creating new trim-f34.dat
+ Creating new trim-f34.def
+ 
+*** Simulation finished *******************************************************
+ 
+Performance timers:
+|---------------------------------------------------------------------|
+|Timer name           |       wall clock      |       CPU time        |
+|                     |-----------------------|-----------------------|
+|                     |       sec     |  %    |       sec     |  %    |
+|---------------------------------------------------------------------|
+|Initialization       |         0.86  |  3.5  |         0.10  |  3.8  | 
+|Simulation           |        23.96  | 95.9  |         2.51  | 95.6  | 
+|Close and stop       |         0.17  |  0.7  |         0.01  |  0.6  | 
+|                     |------------- +|----- +|------------- +|----- +|
+|Total                |        24.99  |100.0  |         2.63  |100.0  | 
+|---------------------------------------------|-----------------------|
+|Momentum eq.         |         0.07  |  0.3  |         0.07  |  2.5  | 
+|Continuity eq.       |         0.06  |  0.2  |         0.05  |  2.0  | 
+|Transport eq.        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Turbulence           |         0.02  |  0.1  |         0.02  |  0.9  | 
+|3D Morphology        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------|-----------------------|
+|Wait (dd   module)   |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Wait (ext. modules)  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In tricom ***                                                   |
+|---------------------------------------------------------------------|
+|Tricom total         |        24.87  | 99.5  |         2.60  | 98.8  | 
+|d3dflow_init         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Time integration     |        23.96  | 95.9  |         2.51  | 95.6  | 
+|step2screen          |         0.01  |  0.0  |         0.01  |  0.4  | 
+|postprocessing       |        23.71  | 94.9  |         2.30  | 87.3  | 
+|Trisol               |         0.23  |  0.9  |         0.20  |  7.7  | 
+|Tricom_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In trisol ***                                                   |
+|---------------------------------------------------------------------|
+|trisol_ini           |         0.00  |  0.0  |         0.00  |  0.1  | 
+|trisol_fluidmud      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|nodal_factor         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incmeteo             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incbc                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|incrbc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incbcc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incdis               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|culvert              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_heat          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|filterstructures     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sousin               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sourmu               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|turclo               |         0.02  |  0.1  |         0.02  |  0.8  | 
+|chkvic               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|iwe00                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dengra               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|tfzeta               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cdwkad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|hydkad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|updbar               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|1st adi              |         0.08  |  0.3  |         0.07  |  2.8  | 
+|massfl               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|euler                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|orbvel               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|upwhu                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|taubot               |         0.01  |  0.1  |         0.01  |  0.4  | 
+|caltmx               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_hles          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|secrhs               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|discha               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|heatu                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|thahbc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trakad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|fallve               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|erosed               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tritra               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tratur               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tur2d                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|forfil               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|drotim               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dersig               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dens                 |         0.00  |  0.0  |         0.00  |  0.0  | 
+|bott3d               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|f0isf1               |         0.01  |  0.0  |         0.00  |  0.2  | 
+|2nd adi              |         0.06  |  0.3  |         0.06  |  2.2  | 
+|calksc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trtrou               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|wphys                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|c_vort               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|non-hydrostatic      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in trisol:     |         0.21  |  0.8  |         0.19  |  7.2  | 
+|---------------------------------------------------------------------|
+| *** In adi ***                                                      |
+|---------------------------------------------------------------------|
+|checku               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|1st_uzd              |         0.04  |  0.2  |         0.04  |  1.4  | 
+|1st_sud              |         0.03  |  0.1  |         0.03  |  1.0  | 
+|drychk               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|comvol               |         0.01  |  0.0  |         0.01  |  0.2  | 
+|2nd_uzd              |         0.03  |  0.1  |         0.03  |  1.1  | 
+|2nd_sud              |         0.03  |  0.1  |         0.02  |  0.9  | 
+|Total in adi:        |         0.14  |  0.6  |         0.13  |  4.8  | 
+|---------------------------------------------------------------------|
+| *** In sud ***                                                      |
+|---------------------------------------------------------------------|
+|sud_cucnp            |         0.03  |  0.1  |         0.03  |  1.1  | 
+|sud_cucbp            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_rowsc            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_solve            |         0.00  |  0.0  |         0.00  |  0.1  | 
+|sud_wang(pre)        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_gwsslv           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_wang(back subst) |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_cucdp            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_veldisch         |         0.01  |  0.0  |         0.01  |  0.2  | 
+|sud_rest             |         0.01  |  0.0  |         0.01  |  0.3  | 
+|Total in sud:        |         0.05  |  0.2  |         0.05  |  1.7  | 
+|---------------------------------------------------------------------|
+| *** In uzd ***                                                      |
+|---------------------------------------------------------------------|
+|uzd initialisation   |         0.00  |  0.0  |         0.00  |  0.2  | 
+|uzd_momsol           |         0.01  |  0.0  |         0.01  |  0.3  | 
+|uzd_rhs              |         0.01  |  0.0  |         0.00  |  0.2  | 
+|uzd_energy loss      |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd stress           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_shear wave       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_disch momentum   |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_horizontal visc  |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_vert adv-diff    |         0.01  |  0.0  |         0.01  |  0.3  | 
+|uzd_boundary cond    |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_lhs              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_rowscale         |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_solve1           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_solve2           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_solve3u          |         0.01  |  0.0  |         0.01  |  0.2  | 
+|uzd_solve4u          |         0.00  |  0.0  |         0.00  |  0.2  | 
+|uzd_solve5v          |         0.00  |  0.0  |         0.00  |  0.2  | 
+|uzd_solve6v          |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_umean            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_rest             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in uzd:        |         0.06  |  0.2  |         0.05  |  2.0  | 
+|---------------------------------------------------------------------|
+| *** In tritra ***                                                   |
+|---------------------------------------------------------------------|
+|1stdifu              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|2nddifu              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tritra_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in tritra:     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In difu ***                                                     |
+|---------------------------------------------------------------------|
+|difu_initialisation  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_horadv          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_hordiff         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_vertadv         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_vertdiff        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_difws           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_bounopen        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_sourcesink      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_secbou          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_lhs             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_rowsc           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve1          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve2          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve3          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve4u         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve5u         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve6v         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve7v         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_rest            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in difu:       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In cucnp ***                                                    |
+|---------------------------------------------------------------------|
+|cucnp_initialisation |         0.00  |  0.0  |         0.00  |  0.1  | 
+|cucnp_momsol         |         0.01  |  0.0  |         0.00  |  0.2  | 
+|cucnp_rhs            |         0.01  |  0.0  |         0.00  |  0.2  | 
+|cucnp_energy loss    |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp stress         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_shear wave     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_disch momentum |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_vert adv-diff  |         0.01  |  0.0  |         0.01  |  0.3  | 
+|cucnp_hor viscosity  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_rowscale       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_lhs            |         0.00  |  0.0  |         0.00  |  0.1  | 
+|cucnp_vihsec         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in cucnp:      |         0.03  |  0.1  |         0.02  |  0.9  | 
+|---------------------------------------------------------------------|
+| *** In parallel routines ***                                        |
+|---------------------------------------------------------------------|
+|dfexchg              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dfreduce             |         0.00  |  0.0  |         0.00  |  0.1  | 
+|Total in parallel:   |         0.00  |  0.0  |         0.00  |  0.1  | 
+|---------------------------------------------------------------------|
+| Performance = CPU time / (TimeSteps*MMAX*NMAX*KMAX)                 |
+|   TimeSteps   :         300                                         |
+|   MMAX        :          15                                         |
+|   NMAX        :          22                                         |
+|   KMAX        :           5                                         |
+|   Performance : 0.53145E-05 [sec]                                   |
+|---------------------------------------------------------------------|
+|Explanation:                                                         |
+|                                                                     |
+|Initialization : Everything up to the first time step                |
+|Simulation     : All time steps                                      |
+|Close and stop : Everything after the last time step                 |
+|Total          : FLOW for this subdomain,                            |
+|                 excluding allocation/deallocation of global data    |
+|                                                                     |
+|Momentum eq.   : Part of Simulation ("UZD")                          |
+|Continuity eq. : Part of Simulation ("SUD")                          |
+|Transport eq.  : Part of Simulation ("DIFU")                         |
+|                 Only relevant when constituents are modelled.       |
+|Turbulence     : Part of Simulation ("TURCLO, TRATUR, TUR2D")        |
+|3D Morphology  : Part of Simulation ("EROSED, BOTT3D")               |
+|                 Only relevant when sediments are modelled.          |
+|Wait (dd)      : Part of Initialization, Simulation and Closing.     |
+|                 ("NXTSTP, NXTDRY")                                  |
+|                 Only relevant when DomainDecomposition is used.     |
+|                 Communication with and execution of the "mappers".  |
+|                 Mappers are separate threads, possibly in another   |
+|                 executable, possibly on another node. They copy     |
+|                 data from one subdomain to another.                 |
+|                 FLOWs must wait while the mappers are executing,    |
+|                 mappers must wait while the FLOWs are executing.    |
+|Wait (ext)     : Part of Initialization, Simulation and Closing.     |
+|                 ("SYNC, _TO_, _FROM_")                              |
+|                 Communication with and execution of all "external"  |
+|                 modules:                                            |
+|                 Online WAVES, Online WAQ, Online RTC, Fluid Mud.    |
+|                                                                     |
+|Additional timers have been added in the following routines:         |
+|                 trisol                                              |
+|                 adi                                                 |
+|                 sud                                                 |
+|                 uzd                                                 |
+|                 tritra                                              |
+|                 difu                                                |
+|                 cucnp                                               |
+|                 parallel routines                                   |
+|The Delft3D-FLOW source code is needed to interpret these timers     |
+|---------------------------------------------------------------------|
+ 
+
+********************************************************************************
+***
+*** FINISHED    Delft3D-FLOW
+***             runid      : f34
+***             date, time : 2026-07-08, 14:57:50
+***
+********************************************************************************
+
+*** MESSAGE Removing file: TMP_f34.grd 
+*** MESSAGE Removing file: TMP_f34.bch 
+*** MESSAGE Removing file: TMP_f34.dis 
+
+
+********************************************************************************
+***
+*** Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+***           built from : unknown source code location
+***
+***           runid      : f34
+***           date,time  : 2026-07-08, 14:58:25
+***
+********************************************************************************
+
+*** MESSAGE Executable for 64-bits platform. 
+*** MESSAGE Double precision computation using reals of kind    8 
+*** Start of User Defined Model description 
+ -
+ -  Het Friesche Zeegaatje        
+ -  (Golf Stroom)                 
+ -  Test model DELFT3D            
+ -  Uitgebreid met ongelijke bodem
+ -
+*** End   of User Defined Model description 
+
+*** MESSAGE Upwind advection scheme only near momentum discharges 
+*** MESSAGE Using UNESCO density formulation by default 
+*** MESSAGE Momentum solver cyclic method is specified 
+*** MESSAGE DRYFLP and DPSOPT both specified in MD-file. Using DPSOPT: MAX 
+*** MESSAGE His, map, drogue, and fourier files written in single precision (except for time and horizontal coordinates).
+*** MESSAGE Removing old output file: trih-f34.dat 
+*** MESSAGE Removing old output file: trih-f34.def 
+ Creating new trih-f34.dat
+ Creating new trih-f34.def
+*** MESSAGE Removing old output file: trim-f34.dat 
+*** MESSAGE Removing old output file: trim-f34.def 
+ Creating new trim-f34.dat
+ Creating new trim-f34.def
+ 
+*** Simulation finished *******************************************************
+ 
+Performance timers:
+|---------------------------------------------------------------------|
+|Timer name           |       wall clock      |       CPU time        |
+|                     |-----------------------|-----------------------|
+|                     |       sec     |  %    |       sec     |  %    |
+|---------------------------------------------------------------------|
+|Initialization       |         0.82  |  3.3  |         0.46  | 15.4  | 
+|Simulation           |        23.95  | 96.0  |         2.49  | 84.1  | 
+|Close and stop       |         0.17  |  0.7  |         0.02  |  0.5  | 
+|                     |------------- +|----- +|------------- +|----- +|
+|Total                |        24.94  |100.0  |         2.96  |100.0  | 
+|---------------------------------------------|-----------------------|
+|Momentum eq.         |         0.07  |  0.3  |         0.07  |  2.2  | 
+|Continuity eq.       |         0.06  |  0.2  |         0.05  |  1.7  | 
+|Transport eq.        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Turbulence           |         0.02  |  0.1  |         0.02  |  0.7  | 
+|3D Morphology        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------|-----------------------|
+|Wait (dd   module)   |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Wait (ext. modules)  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In tricom ***                                                   |
+|---------------------------------------------------------------------|
+|Tricom total         |        24.84  | 99.6  |         2.57  | 86.9  | 
+|d3dflow_init         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Time integration     |        23.95  | 96.0  |         2.49  | 84.1  | 
+|step2screen          |         0.05  |  0.2  |         0.01  |  0.3  | 
+|postprocessing       |        23.68  | 94.9  |         2.28  | 77.0  | 
+|Trisol               |         0.22  |  0.9  |         0.20  |  6.7  | 
+|Tricom_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In trisol ***                                                   |
+|---------------------------------------------------------------------|
+|trisol_ini           |         0.00  |  0.0  |         0.00  |  0.1  | 
+|trisol_fluidmud      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|nodal_factor         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incmeteo             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incbc                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|incrbc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incbcc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|incdis               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|culvert              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_heat          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|filterstructures     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sousin               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sourmu               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|turclo               |         0.02  |  0.1  |         0.02  |  0.7  | 
+|chkvic               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|iwe00                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dengra               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|tfzeta               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cdwkad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|hydkad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|updbar               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|1st adi              |         0.08  |  0.3  |         0.07  |  2.4  | 
+|massfl               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|euler                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|orbvel               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|upwhu                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|taubot               |         0.01  |  0.1  |         0.01  |  0.4  | 
+|caltmx               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_hles          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|secrhs               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|discha               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|heatu                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|thahbc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trakad               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|fallve               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|erosed               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tritra               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tratur               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tur2d                |         0.00  |  0.0  |         0.00  |  0.0  | 
+|forfil               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|drotim               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dersig               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dens                 |         0.00  |  0.0  |         0.00  |  0.0  | 
+|bott3d               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|f0isf1               |         0.01  |  0.0  |         0.00  |  0.2  | 
+|2nd adi              |         0.06  |  0.3  |         0.06  |  2.0  | 
+|calksc               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trtrou               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|wphys                |         0.00  |  0.0  |         0.00  |  0.1  | 
+|c_vort               |         0.00  |  0.0  |         0.00  |  0.0  | 
+|non-hydrostatic      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|trisol_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in trisol:     |         0.20  |  0.8  |         0.19  |  6.3  | 
+|---------------------------------------------------------------------|
+| *** In adi ***                                                      |
+|---------------------------------------------------------------------|
+|checku               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|1st_uzd              |         0.04  |  0.2  |         0.04  |  1.2  | 
+|1st_sud              |         0.03  |  0.1  |         0.03  |  0.9  | 
+|drychk               |         0.00  |  0.0  |         0.00  |  0.1  | 
+|comvol               |         0.01  |  0.0  |         0.00  |  0.2  | 
+|2nd_uzd              |         0.03  |  0.1  |         0.03  |  1.0  | 
+|2nd_sud              |         0.03  |  0.1  |         0.02  |  0.8  | 
+|Total in adi:        |         0.14  |  0.6  |         0.13  |  4.2  | 
+|---------------------------------------------------------------------|
+| *** In sud ***                                                      |
+|---------------------------------------------------------------------|
+|sud_cucnp            |         0.03  |  0.1  |         0.03  |  0.9  | 
+|sud_cucbp            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_rowsc            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_solve            |         0.00  |  0.0  |         0.00  |  0.1  | 
+|sud_wang(pre)        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_gwsslv           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_wang(back subst) |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_cucdp            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|sud_veldisch         |         0.01  |  0.0  |         0.01  |  0.2  | 
+|sud_rest             |         0.01  |  0.0  |         0.01  |  0.2  | 
+|Total in sud:        |         0.05  |  0.2  |         0.05  |  1.5  | 
+|---------------------------------------------------------------------|
+| *** In uzd ***                                                      |
+|---------------------------------------------------------------------|
+|uzd initialisation   |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_momsol           |         0.01  |  0.0  |         0.01  |  0.2  | 
+|uzd_rhs              |         0.01  |  0.0  |         0.00  |  0.2  | 
+|uzd_energy loss      |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd stress           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_shear wave       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_disch momentum   |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_horizontal visc  |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_vert adv-diff    |         0.01  |  0.0  |         0.01  |  0.3  | 
+|uzd_boundary cond    |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_lhs              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_rowscale         |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_solve1           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_solve2           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_solve3u          |         0.01  |  0.0  |         0.01  |  0.2  | 
+|uzd_solve4u          |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_solve5v          |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_solve6v          |         0.00  |  0.0  |         0.00  |  0.1  | 
+|uzd_umean            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|uzd_rest             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in uzd:        |         0.06  |  0.2  |         0.05  |  1.7  | 
+|---------------------------------------------------------------------|
+| *** In tritra ***                                                   |
+|---------------------------------------------------------------------|
+|1stdifu              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|2nddifu              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|tritra_rest          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in tritra:     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In difu ***                                                     |
+|---------------------------------------------------------------------|
+|difu_initialisation  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_horadv          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_hordiff         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_vertadv         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_vertdiff        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_difws           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_bounopen        |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_sourcesink      |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_secbou          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_lhs             |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_rowsc           |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve1          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve2          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve3          |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve4u         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve5u         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve6v         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_solve7v         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|difu_rest            |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in difu:       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|---------------------------------------------------------------------|
+| *** In cucnp ***                                                    |
+|---------------------------------------------------------------------|
+|cucnp_initialisation |         0.00  |  0.0  |         0.00  |  0.1  | 
+|cucnp_momsol         |         0.01  |  0.0  |         0.00  |  0.2  | 
+|cucnp_rhs            |         0.01  |  0.0  |         0.00  |  0.2  | 
+|cucnp_energy loss    |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp stress         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_shear wave     |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_disch momentum |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_vert adv-diff  |         0.01  |  0.0  |         0.01  |  0.2  | 
+|cucnp_hor viscosity  |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_rowscale       |         0.00  |  0.0  |         0.00  |  0.0  | 
+|cucnp_lhs            |         0.00  |  0.0  |         0.00  |  0.1  | 
+|cucnp_vihsec         |         0.00  |  0.0  |         0.00  |  0.0  | 
+|Total in cucnp:      |         0.03  |  0.1  |         0.02  |  0.8  | 
+|---------------------------------------------------------------------|
+| *** In parallel routines ***                                        |
+|---------------------------------------------------------------------|
+|dfexchg              |         0.00  |  0.0  |         0.00  |  0.0  | 
+|dfreduce             |         0.00  |  0.0  |         0.00  |  0.1  | 
+|Total in parallel:   |         0.00  |  0.0  |         0.00  |  0.1  | 
+|---------------------------------------------------------------------|
+| Performance = CPU time / (TimeSteps*MMAX*NMAX*KMAX)                 |
+|   TimeSteps   :         300                                         |
+|   MMAX        :          15                                         |
+|   NMAX        :          22                                         |
+|   KMAX        :           5                                         |
+|   Performance : 0.59814E-05 [sec]                                   |
+|---------------------------------------------------------------------|
+|Explanation:                                                         |
+|                                                                     |
+|Initialization : Everything up to the first time step                |
+|Simulation     : All time steps                                      |
+|Close and stop : Everything after the last time step                 |
+|Total          : FLOW for this subdomain,                            |
+|                 excluding allocation/deallocation of global data    |
+|                                                                     |
+|Momentum eq.   : Part of Simulation ("UZD")                          |
+|Continuity eq. : Part of Simulation ("SUD")                          |
+|Transport eq.  : Part of Simulation ("DIFU")                         |
+|                 Only relevant when constituents are modelled.       |
+|Turbulence     : Part of Simulation ("TURCLO, TRATUR, TUR2D")        |
+|3D Morphology  : Part of Simulation ("EROSED, BOTT3D")               |
+|                 Only relevant when sediments are modelled.          |
+|Wait (dd)      : Part of Initialization, Simulation and Closing.     |
+|                 ("NXTSTP, NXTDRY")                                  |
+|                 Only relevant when DomainDecomposition is used.     |
+|                 Communication with and execution of the "mappers".  |
+|                 Mappers are separate threads, possibly in another   |
+|                 executable, possibly on another node. They copy     |
+|                 data from one subdomain to another.                 |
+|                 FLOWs must wait while the mappers are executing,    |
+|                 mappers must wait while the FLOWs are executing.    |
+|Wait (ext)     : Part of Initialization, Simulation and Closing.     |
+|                 ("SYNC, _TO_, _FROM_")                              |
+|                 Communication with and execution of all "external"  |
+|                 modules:                                            |
+|                 Online WAVES, Online WAQ, Online RTC, Fluid Mud.    |
+|                                                                     |
+|Additional timers have been added in the following routines:         |
+|                 trisol                                              |
+|                 adi                                                 |
+|                 sud                                                 |
+|                 uzd                                                 |
+|                 tritra                                              |
+|                 difu                                                |
+|                 cucnp                                               |
+|                 parallel routines                                   |
+|The Delft3D-FLOW source code is needed to interpret these timers     |
+|---------------------------------------------------------------------|
+ 
+
+********************************************************************************
+***
+*** FINISHED    Delft3D-FLOW
+***             runid      : f34
+***             date, time : 2026-07-08, 14:58:50
+***
+********************************************************************************
+
+*** MESSAGE Removing file: TMP_f34.grd 
+*** MESSAGE Removing file: TMP_f34.bch 
+*** MESSAGE Removing file: TMP_f34.dis 

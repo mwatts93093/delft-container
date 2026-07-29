@@ -1,0 +1,266 @@
+    Configfile       : config_d_hydro.xml
+    D3D_HOME         : /build/Delft3D/install_flow2d3d/bin/..
+    Working directory: /workspace/examples/delft3d4/02_domaindecomposition
+    mpiexec is /opt/intel/oneapi/mpi/2021.10.0//bin/mpiexec
+    FI_PROVIDER      : 
+    I_MPI_FABRICS    : 
+
+executing:
+/build/Delft3D/install_flow2d3d/bin/../bin/d_hydro config_d_hydro.xml
+--------------------------------------------------------------------------------
+       Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+       libflow2d3d.so entry Flow2D3D::Run
+--------------------------------------------------------------------------------
+
+Part I    - Initialisation Time Dep. Data module...    
+            runid : zz1
+Part II   - Creating intermediate files...             
+Part III  - Initialisation of the Execution module...  
+Part IV   - Reading complete MD-file...                     
+Part V    - Initialisation & checking input...              
+Part VI   - Initialisation & checking second part...        
+--------------------------------------------------------------------------------
+       Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+       libflow2d3d.so entry Flow2D3D::Run
+--------------------------------------------------------------------------------
+
+Part I    - Initialisation Time Dep. Data module...    
+            runid : zz2
+Part II   - Creating intermediate files...             
+Part III  - Initialisation of the Execution module...  
+Part IV   - Reading complete MD-file...                     
+Part V    - Initialisation & checking input...              
+Part VI   - Initialisation & checking second part...        
+--------------------------------------------------------------------------------
+       Deltares, flow2d3d  Version 6.04.03.Unknown, Jul 08 2026, 14:45:34
+       libflow2d3d.so entry Flow2D3D::Run
+--------------------------------------------------------------------------------
+
+Part I    - Initialisation Time Dep. Data module...    
+            runid : zz3
+Part II   - Creating intermediate files...             
+Part III  - Initialisation of the Execution module...  
+Part IV   - Reading complete MD-file...                     
+Part V    - Initialisation & checking input...              
+Part VI   - Initialisation & checking second part...        
+Part VII  - Initialisation output...                        
+Part VII  - Initialisation output...                        
+Part VII  - Initialisation output...                        
+Part VIII - Start Simulation...                             
+ 
+  Time to finish   0s,    0.0% completed, time steps left  60
+Part VIII - Start Simulation...                             
+ 
+  Time to finish   0s,    0.0% completed, time steps left  60
+Part VIII - Start Simulation...                             
+ 
+  Time to finish   0s,    0.0% completed, time steps left  60
+  Time to finish   8s,    1.7% completed, time steps left  59
+  Time to finish   5s,    1.7% completed, time steps left  59
+  Time to finish  13s,    1.7% completed, time steps left  59
+  Time to finish   3s,    3.3% completed, time steps left  58
+  Time to finish   6s,    3.3% completed, time steps left  58
+  Time to finish   4s,    3.3% completed, time steps left  58
+  Time to finish   2s,    5.0% completed, time steps left  57
+  Time to finish   4s,    5.0% completed, time steps left  57
+  Time to finish   3s,    5.0% completed, time steps left  57
+  Time to finish   1s,    6.7% completed, time steps left  56
+  Time to finish   3s,    6.7% completed, time steps left  56
+  Time to finish   2s,    6.7% completed, time steps left  56
+  Time to finish   1s,    8.3% completed, time steps left  55
+  Time to finish   3s,    8.3% completed, time steps left  55
+  Time to finish   3s,    8.3% completed, time steps left  55
+  Time to finish   3s,   10.0% completed, time steps left  54
+  Time to finish   3s,   10.0% completed, time steps left  54
+  Time to finish   4s,   10.0% completed, time steps left  54
+  Time to finish   2s,   11.7% completed, time steps left  53
+  Time to finish   3s,   11.7% completed, time steps left  53
+  Time to finish   3s,   11.7% completed, time steps left  53
+  Time to finish   2s,   13.3% completed, time steps left  52
+  Time to finish   2s,   13.3% completed, time steps left  52
+  Time to finish   3s,   13.3% completed, time steps left  52
+  Time to finish   2s,   15.0% completed, time steps left  51
+  Time to finish   2s,   15.0% completed, time steps left  51
+  Time to finish   3s,   15.0% completed, time steps left  51
+  Time to finish   2s,   16.7% completed, time steps left  50
+  Time to finish   3s,   16.7% completed, time steps left  50
+  Time to finish   3s,   16.7% completed, time steps left  50
+  Time to finish   2s,   18.3% completed, time steps left  49
+  Time to finish   3s,   18.3% completed, time steps left  49
+  Time to finish   3s,   18.3% completed, time steps left  49
+  Time to finish   2s,   20.0% completed, time steps left  48
+  Time to finish   2s,   20.0% completed, time steps left  48
+  Time to finish   3s,   20.0% completed, time steps left  48
+  Time to finish   2s,   21.7% completed, time steps left  47
+  Time to finish   2s,   21.7% completed, time steps left  47
+  Time to finish   2s,   21.7% completed, time steps left  47
+  Time to finish   2s,   23.3% completed, time steps left  46
+  Time to finish   2s,   23.3% completed, time steps left  46
+  Time to finish   2s,   23.3% completed, time steps left  46
+  Time to finish   2s,   25.0% completed, time steps left  45
+  Time to finish   2s,   25.0% completed, time steps left  45
+  Time to finish   2s,   25.0% completed, time steps left  45
+  Time to finish   2s,   26.7% completed, time steps left  44
+  Time to finish   2s,   26.7% completed, time steps left  44
+  Time to finish   2s,   26.7% completed, time steps left  44
+  Time to finish   2s,   28.3% completed, time steps left  43
+  Time to finish   2s,   28.3% completed, time steps left  43
+  Time to finish   2s,   28.3% completed, time steps left  43
+  Time to finish   2s,   30.0% completed, time steps left  42
+  Time to finish   2s,   30.0% completed, time steps left  42
+  Time to finish   2s,   30.0% completed, time steps left  42
+  Time to finish   2s,   31.7% completed, time steps left  41
+  Time to finish   2s,   31.7% completed, time steps left  41
+  Time to finish   2s,   31.7% completed, time steps left  41
+  Time to finish   2s,   33.3% completed, time steps left  40
+  Time to finish   2s,   33.3% completed, time steps left  40
+  Time to finish   2s,   33.3% completed, time steps left  40
+  Time to finish   2s,   35.0% completed, time steps left  39
+  Time to finish   2s,   35.0% completed, time steps left  39
+  Time to finish   2s,   35.0% completed, time steps left  39
+  Time to finish   2s,   36.7% completed, time steps left  38
+  Time to finish   2s,   36.7% completed, time steps left  38
+  Time to finish   2s,   36.7% completed, time steps left  38
+  Time to finish   2s,   38.3% completed, time steps left  37
+  Time to finish   2s,   38.3% completed, time steps left  37
+  Time to finish   2s,   38.3% completed, time steps left  37
+  Time to finish   2s,   40.0% completed, time steps left  36
+  Time to finish   2s,   40.0% completed, time steps left  36
+  Time to finish   2s,   40.0% completed, time steps left  36
+  Time to finish   1s,   41.7% completed, time steps left  35
+  Time to finish   2s,   41.7% completed, time steps left  35
+  Time to finish   2s,   41.7% completed, time steps left  35
+  Time to finish   2s,   43.3% completed, time steps left  34
+  Time to finish   2s,   43.3% completed, time steps left  34
+  Time to finish   2s,   43.3% completed, time steps left  34
+  Time to finish   2s,   45.0% completed, time steps left  33
+  Time to finish   2s,   45.0% completed, time steps left  33
+  Time to finish   2s,   45.0% completed, time steps left  33
+  Time to finish   1s,   46.7% completed, time steps left  32
+  Time to finish   1s,   46.7% completed, time steps left  32
+  Time to finish   2s,   46.7% completed, time steps left  32
+  Time to finish   1s,   48.3% completed, time steps left  31
+  Time to finish   1s,   48.3% completed, time steps left  31
+  Time to finish   1s,   48.3% completed, time steps left  31
+  Time to finish   1s,   50.0% completed, time steps left  30
+  Time to finish   1s,   50.0% completed, time steps left  30
+  Time to finish   1s,   50.0% completed, time steps left  30
+  Time to finish   1s,   51.7% completed, time steps left  29
+  Time to finish   1s,   51.7% completed, time steps left  29
+  Time to finish   1s,   51.7% completed, time steps left  29
+  Time to finish   1s,   53.3% completed, time steps left  28
+  Time to finish   1s,   53.3% completed, time steps left  28
+  Time to finish   1s,   53.3% completed, time steps left  28
+  Time to finish   1s,   55.0% completed, time steps left  27
+  Time to finish   1s,   55.0% completed, time steps left  27
+  Time to finish   1s,   55.0% completed, time steps left  27
+  Time to finish   1s,   56.7% completed, time steps left  26
+  Time to finish   1s,   56.7% completed, time steps left  26
+  Time to finish   1s,   56.7% completed, time steps left  26
+  Time to finish   1s,   58.3% completed, time steps left  25
+  Time to finish   1s,   58.3% completed, time steps left  25
+  Time to finish   1s,   58.3% completed, time steps left  25
+  Time to finish   1s,   60.0% completed, time steps left  24
+  Time to finish   1s,   60.0% completed, time steps left  24
+  Time to finish   1s,   60.0% completed, time steps left  24
+  Time to finish   1s,   61.7% completed, time steps left  23
+  Time to finish   1s,   61.7% completed, time steps left  23
+  Time to finish   1s,   61.7% completed, time steps left  23
+  Time to finish   1s,   63.3% completed, time steps left  22
+  Time to finish   1s,   63.3% completed, time steps left  22
+  Time to finish   1s,   63.3% completed, time steps left  22
+  Time to finish   1s,   65.0% completed, time steps left  21
+  Time to finish   1s,   65.0% completed, time steps left  21
+  Time to finish   1s,   65.0% completed, time steps left  21
+  Time to finish   1s,   66.7% completed, time steps left  20
+  Time to finish   1s,   66.7% completed, time steps left  20
+  Time to finish   1s,   66.7% completed, time steps left  20
+  Time to finish   1s,   68.3% completed, time steps left  19
+  Time to finish   1s,   68.3% completed, time steps left  19
+  Time to finish   1s,   68.3% completed, time steps left  19
+  Time to finish   1s,   70.0% completed, time steps left  18
+  Time to finish   1s,   70.0% completed, time steps left  18
+  Time to finish   1s,   70.0% completed, time steps left  18
+  Time to finish   1s,   71.7% completed, time steps left  17
+  Time to finish   1s,   71.7% completed, time steps left  17
+  Time to finish   1s,   71.7% completed, time steps left  17
+  Time to finish   1s,   73.3% completed, time steps left  16
+  Time to finish   1s,   73.3% completed, time steps left  16
+  Time to finish   1s,   73.3% completed, time steps left  16
+  Time to finish   1s,   75.0% completed, time steps left  15
+  Time to finish   1s,   75.0% completed, time steps left  15
+  Time to finish   1s,   75.0% completed, time steps left  15
+  Time to finish   1s,   76.7% completed, time steps left  14
+  Time to finish   1s,   76.7% completed, time steps left  14
+  Time to finish   1s,   76.7% completed, time steps left  14
+  Time to finish   1s,   78.3% completed, time steps left  13
+  Time to finish   1s,   78.3% completed, time steps left  13
+  Time to finish   1s,   78.3% completed, time steps left  13
+  Time to finish   1s,   80.0% completed, time steps left  12
+  Time to finish   1s,   80.0% completed, time steps left  12
+  Time to finish   1s,   80.0% completed, time steps left  12
+  Time to finish   0s,   81.7% completed, time steps left  11
+  Time to finish   1s,   81.7% completed, time steps left  11
+  Time to finish   1s,   81.7% completed, time steps left  11
+  Time to finish   0s,   83.3% completed, time steps left  10
+  Time to finish   0s,   83.3% completed, time steps left  10
+  Time to finish   0s,   83.3% completed, time steps left  10
+  Time to finish   0s,   85.0% completed, time steps left  9
+  Time to finish   0s,   85.0% completed, time steps left  9
+  Time to finish   0s,   85.0% completed, time steps left  9
+  Time to finish   0s,   86.7% completed, time steps left  8
+  Time to finish   0s,   86.7% completed, time steps left  8
+  Time to finish   0s,   86.7% completed, time steps left  8
+  Time to finish   0s,   88.3% completed, time steps left  7
+  Time to finish   0s,   88.3% completed, time steps left  7
+  Time to finish   0s,   88.3% completed, time steps left  7
+  Time to finish   0s,   90.0% completed, time steps left  6
+  Time to finish   0s,   90.0% completed, time steps left  6
+  Time to finish   0s,   90.0% completed, time steps left  6
+  Time to finish   0s,   91.7% completed, time steps left  5
+  Time to finish   0s,   91.7% completed, time steps left  5
+  Time to finish   0s,   91.7% completed, time steps left  5
+  Time to finish   0s,   93.3% completed, time steps left  4
+  Time to finish   0s,   93.3% completed, time steps left  4
+  Time to finish   0s,   93.3% completed, time steps left  4
+  Time to finish   0s,   95.0% completed, time steps left  3
+  Time to finish   0s,   95.0% completed, time steps left  3
+  Time to finish   0s,   95.0% completed, time steps left  3
+  Time to finish   0s,   96.7% completed, time steps left  2
+  Time to finish   0s,   96.7% completed, time steps left  2
+  Time to finish   0s,   96.7% completed, time steps left  2
+  Time to finish   0s,   98.3% completed, time steps left  1
+  Time to finish   0s,   98.3% completed, time steps left  1
+  Time to finish   0s,   98.3% completed, time steps left  1
+ 
+------------------------------------------------------------------------------
+  FINISHED    Delft3D-FLOW
+              runid      : zz3
+              date, time : 2026-07-08, 14:58:55
+*** WARNING DPUOPT not prescribed, set to MEAN
+*** WARNING Latitude of your model is 0 degrees, model located at equator
+    0 errors and     2 warnings
+returning to main program from domain zz3
+------------------------------------------------------------------------------
+ 
+------------------------------------------------------------------------------
+  FINISHED    Delft3D-FLOW
+              runid      : zz1
+              date, time : 2026-07-08, 14:58:55
+*** WARNING DPUOPT not prescribed, set to MEAN
+*** WARNING Latitude of your model is 0 degrees, model located at equator
+    0 errors and     2 warnings
+returning to main program from domain zz1
+------------------------------------------------------------------------------
+ 
+------------------------------------------------------------------------------
+  FINISHED    Delft3D-FLOW
+              runid      : zz2
+              date, time : 2026-07-08, 14:58:55
+*** WARNING DPUOPT not prescribed, set to MEAN
+*** WARNING Latitude of your model is 0 degrees, model located at equator
+    0 errors and     2 warnings
+returning to main program from domain zz2
+------------------------------------------------------------------------------
+D_Hydro [1783522735.994845] <anonymous> >> d_hydro shutting down normally
+
