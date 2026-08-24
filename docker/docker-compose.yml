@@ -1,6 +1,6 @@
 services:
   delft3d:
-    image: delft3dfm:demo
+    image: ghcr.io/mwatts93093/delft-container:latest
     container_name: delft3d
     # Run this from WSL2 via: docker compose -f docker-compose.yml up -d
     # Must be run from a WSL2 terminal where $DISPLAY is set by WSLg
