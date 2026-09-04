@@ -36,6 +36,10 @@ opens the NetCDF results written to the shared workspace.
 
 ## Where should I start?
 
+- **Prefer a printable, screenshot-based walkthrough:** use the
+  [Complete Setup, Run, and ParaView Guide](Delft3D_Complete_Setup_Run_ParaView_Guide.docx).
+  The two repository corrections described in its Part 5 are already included
+  in this checkout, so no manual `sed` commands are required.
 - **Setting up a new workstation:** begin with [Part 1](#part-1-set-up-windows).
 - **The workstation is already configured:** go to
   [Part 3](#part-3-start-and-stop-the-container).
@@ -241,7 +245,8 @@ Still in the `docker` directory:
 ```
 
 The test checks installed tools and libraries, runs a shortened copy of the
-included f34 model, and validates the newly generated UGRID NetCDF output.
+included f34 model from `/workspace/demo/f34`, and validates the newly
+generated UGRID NetCDF output.
 
 Also verify the WSLg path used by `ncview`:
 
@@ -262,6 +267,9 @@ Functional verification passed (6 checks, mode=smoke, gui=true).
 Use either Docker Compose or the manual `docker run` command. Compose is
 recommended for routine use because it records the image name, workspace mount,
 display forwarding, and container name in one file.
+
+The supplied Compose configuration uses the locally built `delft3dfm:demo`
+image from Part 2; it does not require access to a private container registry.
 
 ### Option A: Docker Compose—recommended
 
@@ -521,7 +529,7 @@ control the output directory and intervals.
 For the included sequential example:
 
 ```bash
-cd /workspace/examples/dflowfm/01_dflowfm_sequential/dflowfm
+cd /workspace/demo/f34
 dflowfm f34.mdu
 ```
 
@@ -541,7 +549,7 @@ To protect the original example, copy it into a new project directory:
 ```bash
 mkdir -p /workspace/projects
 cp -a \
-  /workspace/examples/dflowfm/01_dflowfm_sequential/dflowfm \
+  /workspace/demo/f34 \
   /workspace/projects/f34-demo
 cd /workspace/projects/f34-demo
 rm -rf ./output
@@ -816,6 +824,16 @@ Build it from the `docker` directory:
 docker build -t delft3dfm:demo .
 ```
 
+If Docker instead tries to pull
+`ghcr.io/mwatts93093/delft-container:latest`, update your checkout: the current
+`docker-compose.yml` is configured to use the locally built image.
+
+### The bundled f34 model cannot be found
+
+The included model is at `/workspace/demo/f34`. If `./verify.sh` reports the
+older `/workspace/examples/dflowfm/01_dflowfm_sequential/dflowfm` location,
+update your checkout so `scripts/verify_container.sh` uses the current path.
+
 ### `/workspace` is empty or contains the wrong files
 
 Exit the container and, from the `docker` directory in Ubuntu, inspect:
@@ -921,6 +939,7 @@ OpenMP   : no
 
 ```text
 delft-container/
+├── Delft3D_Complete_Setup_Run_ParaView_Guide.docx
 ├── README.md
 └── docker/
     ├── Dockerfile
@@ -933,11 +952,18 @@ delft-container/
     │   ├── entrypoint.sh
     │   └── verify_container.sh
     └── workspace/
+        ├── demo/
+        │   └── f34/
         └── examples/
 ```
 
 ## Further reading
 
+- [Complete Setup, Run, and ParaView Guide](Delft3D_Complete_Setup_Run_ParaView_Guide.docx)
+  — an additional illustrated reference covering installation, the bundled
+  f34 run, ParaView visualization, and the tested UGRID metadata workaround.
+  Its Part 5 records the original repository issues; those corrections are now
+  applied in this repository.
 - [Microsoft: Install WSL](https://learn.microsoft.com/windows/wsl/install)
 - [Microsoft: Run Linux GUI applications with WSL](https://learn.microsoft.com/windows/wsl/tutorials/gui-apps)
 - [Docker: Install Docker Desktop on Windows](https://docs.docker.com/desktop/setup/install/windows-install/)

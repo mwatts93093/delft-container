@@ -80,7 +80,7 @@ for feature in MPI PETSc METIS PROJ GDAL; do
 done
 pass "dflowfm starts and reports the expected compiled features"
 
-example_dir="/workspace/examples/dflowfm/01_dflowfm_sequential/dflowfm"
+example_dir="/workspace/demo/f34"
 [[ -f "$example_dir/f34.mdu" ]] ||
     fail "bundled f34 model was not found at $example_dir"
 
